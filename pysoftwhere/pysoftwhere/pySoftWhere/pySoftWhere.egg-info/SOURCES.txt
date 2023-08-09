@@ -1,0 +1,7 @@
+README.rst
+setup.py
+pySoftWhere.egg-info/PKG-INFO
+pySoftWhere.egg-info/SOURCES.txt
+pySoftWhere.egg-info/dependency_links.txt
+pySoftWhere.egg-info/requires.txt
+pySoftWhere.egg-info/top_level.txt
