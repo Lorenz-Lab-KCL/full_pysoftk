@@ -16,7 +16,7 @@ in both cases. In the case of conda, please enable the environment. For a virtua
 
 # To run the test and the pytest inside python
 
-Due to the size of the trajectory file (115MB), I have to split the trajetory into 2 file which are located in the folder **test**. 
+Due to the size of the trajectory file (115MB), I have to split the trajetory into 2 files which are located in the folder **test**. 
 To join the trajectory just type (**cat intrinsic_density_movie_split.aa intrinsic_density_movie_split.ab > intrinsic_density_movie.xtc**)
 this enables to use the file **fail.py**. 
 
