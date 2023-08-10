@@ -1,4 +1,4 @@
-# full_pysoftk
+# Full_pysoftk
 
 
 This is the full version of pysoftk that includes:
