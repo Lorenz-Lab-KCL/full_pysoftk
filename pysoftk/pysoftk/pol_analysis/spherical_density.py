@@ -268,7 +268,7 @@ class spherical_density(MDA_input):
         density_plot = list(density)
 
 
-        return density
+        return density_plot, binned_space[:-1]
 
 
 
