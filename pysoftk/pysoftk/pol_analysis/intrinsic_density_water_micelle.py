@@ -275,6 +275,9 @@ class intrinsic_density_water(MDA_input):
            final_density : np.array
                 intrinsic density
 
+            binned_space : np.array
+            array with the values of the binned radial distance, this allows easier plotting of the density
+
         """
         import MDAnalysis as mda
         import concurrent.futures
