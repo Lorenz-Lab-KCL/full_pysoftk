@@ -325,14 +325,14 @@ class RSA(MDA_input):
             return (ring_contact_atoms, pol_idx)
 
 
-    def find_several_rings_stacked(self, rings_df):
+    def find_several_rings_stacked(self, rings_df_name):
         """Function to find several rings stacked using a provided
            pandas DataFrame from previous calculations.
 
         Parameters
         -----------
 
-        rings_df: pandas.DataFrame
+        rings_df_name: pandas.DataFrame
            Pandas dataframe containing the results from the ring_ring 
            analysis.
 
@@ -347,7 +347,7 @@ class RSA(MDA_input):
         import networkx as nx
         import pandas as pd
 
-        rings_df = pd.read_parquet('output.parquet')
+        rings_df = pd.read_parquet(rings_df_name)
         connections = rings_df.iloc[:, 1].tolist()
 
         graph = nx.Graph()
