@@ -331,4 +331,6 @@ class intrinsic_density_water(MDA_input):
 
         final_density=intrinsic_density_profile/S_bar
 
-        return final_density
+        binned_space_plot=np.arange(n_min, n_max, n_step)[:-1]
+
+        return final_density, binned_space_plot
