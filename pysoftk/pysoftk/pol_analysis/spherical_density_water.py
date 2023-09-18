@@ -231,6 +231,9 @@ class spherical_density_water(MDA_input):
  
        density: np.array
             array with the density values as a function of the distance to the COM of the micelle
+            
+        binned_space : np.array
+            array with the values of the binned radial distance, this allows easier plotting of the density
 
         """
 
@@ -284,7 +287,7 @@ class spherical_density_water(MDA_input):
        
 
 
-        return density_plot
+        return density_plot, binned_space[:-1]
 
 
 
