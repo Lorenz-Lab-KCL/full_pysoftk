@@ -21,7 +21,7 @@ def test_intrinsic_density_cyclic(rootdir):
     trajectory=os.path.join(rootdir, 'data/intrinsic_density_movie.xtc')
 
 
-    resids = os.path.join(rootdir, 'data/cyclic_id.parquet')
+    resids = os.path.join(rootdir, 'data/cyclic_intrinsic_scp_result.parquet')
 
 
     MA_names_c = ['C028', 'C024', 'C022', 'C02E', 'C02I', 'C02M', 'C02Q', 'C02U', 'C02Y', 'C00S', 'C00Q', 'C00M', 
@@ -35,11 +35,11 @@ def test_intrinsic_density_cyclic(rootdir):
     resids = micelle_whole(topology, trajectory).obtain_largest_micelle_resids(resids)
 
 
-    atom_pos = micelle_whole(topology, trajectory).running_make_cluster_whole(['LIG'], resids, 75, 10000, 1)
+    atom_pos = micelle_whole(topology, trajectory).running_make_cluster_whole(['LIG'], resids, 0, 10000, 1)
 
 
-    density_whole = intrinsic_density(topology, trajectory).run_intrinsic_density(resids, atom_pos, MA_names_c, MA_names_c, ['OW'], 75, 10000, 1)
+    density_whole, binned_space = intrinsic_density(topology, trajectory).run_intrinsic_density(resids, atom_pos, MA_names_c, MA_names_c, ['OW'], 0, 10000, 1)
 
-    density_whole_f = list(density_whole)
+    #density_whole_f = list(density_whole)
 
-    assert len(density_whole_f) >= 1
+    assert len(density_whole) >= 1
