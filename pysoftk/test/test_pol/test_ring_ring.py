@@ -1,15 +1,20 @@
 import pytest
 import os
 from functools import wraps
-from  utils_mda import MDA_input
-from utils_tools import *
-from clustering import SCP
-from make_micelle_whole import micelle_whole
-from ring_ring import RSA
-#from pysoftk.pol_analysis.ring_ring import RSA
 import numpy as np
 import filecmp
 import pandas as pd
+
+import pytest
+import os
+from functools import wraps
+
+
+from pysoftk.pol_analysis.tools.utils_mda import MDA_input
+from pysoftk.pol_analysis.tools.utils_tools import *
+from pysoftk.pol_analysis.clustering import SCP
+from pysoftk.pol_analysis.make_micelle_whole import micelle_whole
+from pysoftk.pol_analysis.ring_ring import RSA
 
 
 
