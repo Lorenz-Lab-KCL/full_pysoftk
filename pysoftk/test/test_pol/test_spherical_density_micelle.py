@@ -40,9 +40,9 @@ def test_sph_density_triblock(rootdir):
     atom_pos = micelle_whole(topology, trajectory).running_make_cluster_whole(['LIG'], resids, 0, 1000, 2)
 
 
-    spherical_density_whole = spherical_density(topology, trajectory).run_density_calc('resid ', resids, atom_pos, MA_names_total)
+    spherical_density_whole, binned_space = spherical_density(topology, trajectory).run_density_calc('resid ', resids, atom_pos, MA_names_total)
 
-    spherical_density_whole_f = np.array(list(spherical_density_whole))
+    #spherical_density_whole_f = np.array(list(spherical_density_whole))
 
 
-    assert np.array_equal(spherical_density_whole_f, spherical_file_f)
+    assert np.array_equal(spherical_density_whole, spherical_file_f)
