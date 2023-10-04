@@ -16,7 +16,7 @@ from itertools import combinations
 import itertools
 
 from scipy.spatial.distance import cdist
-from pysoftk.pol_analysis.micelle_whole import micelle_whole
+from pysoftk.pol_analysis.make_micelle_whole import micelle_whole
 
 from tqdm import tqdm
 import time
