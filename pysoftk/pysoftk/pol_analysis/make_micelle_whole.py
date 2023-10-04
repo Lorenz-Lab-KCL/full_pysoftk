@@ -275,7 +275,7 @@ class micelle_whole(MDA_input):
       bins_max = len(res_dimensions)*[bins_max]
       bins_step = len(res_dimensions)*[bins_step]
     
-      atom_positions = map(self.pbc_per_dimension, res_clu_atoms, res_box, res_dimensions, bins_min, bins_max, bins_step)
+      atom_positions = list(map(self.pbc_per_dimension, res_clu_atoms, res_box, res_dimensions, bins_min, bins_max, bins_step))
       atom_positions_whole = np.stack(atom_positions, axis = 1) 
    
       return (frame, atom_positions_whole)
