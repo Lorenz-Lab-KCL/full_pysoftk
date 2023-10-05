@@ -3,7 +3,7 @@ from MDAnalysis.lib import distances
 
 import numpy as np
 import matplotlib.pyplot as plt
-from tools.utils_mda import MDA_input
+from pysoftk.pol_analysis.tools.utils_mda import MDA_input
 
 # suppress some MDAnalysis warnings when writing PDB files
 import warnings
