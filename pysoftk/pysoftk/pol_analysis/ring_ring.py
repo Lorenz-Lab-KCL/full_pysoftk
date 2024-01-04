@@ -7,7 +7,6 @@ from pysoftk.pol_analysis.make_micelle_whole import micelle_whole
 from pysoftk.pol_analysis.clustering import SCP
 from pysoftk.pol_analysis.tools.utils_tools import *
 
-
 # suppress some MDAnalysis warnings when writing PDB files
 import warnings
 warnings.filterwarnings('ignore')
