@@ -13,7 +13,7 @@ from pysoftk.pol_analysis.tools.utils_tools import *
 from pysoftk.pol_analysis.clustering import SCP
 from pysoftk.pol_analysis.make_micelle_whole import micelle_whole
 from pysoftk.pol_analysis.contact_analysis import contacts
-from pysoftk.pol_analysis.hydration import hydration
+from pysoftk.pol_analysis.solvation import solvation
 
 @pytest.fixture
 def rootdir():
@@ -40,7 +40,7 @@ def test_hydration_cyclic(rootdir):
 
     MA_oxygen_names = ['O00A', 'O00D', 'O00C', 'O01G', 'O01F', 'O01D', 'O01A', 'O019', 'O016', 'O015', 'O010', 'O012']
 
-    coord_number = hydration(water_topology, water_trajectory).hydration_calc_run(0, 10001, 1, resids, atom_pos, ['OW'], MA_oxygen_names, 4.5 )
+    coord_number = solvation(water_topology, water_trajectory).solvation_calc_run(0, 10001, 1, resids, atom_pos, ['OW'], MA_oxygen_names, 4.5 )
     
 
     coord_f = np.array(list(coord_number))
@@ -71,7 +71,7 @@ def test_hydration_branched(rootdir):
 
     MA_oxygen_names = ['O010', 'O012',  'O019', 'O017', 'O00X',  'O00V','O00S', 'O00Z', 'O01I',  'O01G',  'O01E','O01C']
 
-    coord_number = hydration(topology, trajectory).hydration_calc_run(0, 10001, 1, resids, atom_pos, ['OW'], MA_oxygen_names, 4.5 )
+    coord_number = solvation(topology, trajectory).solvation_calc_run(0, 10001, 1, resids, atom_pos, ['OW'], MA_oxygen_names, 4.5 )
     
 
     coord_f = np.array(list(coord_number))
