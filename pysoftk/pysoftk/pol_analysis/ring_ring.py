@@ -99,12 +99,9 @@ class RSA(MDA_input):
         from rdkit import Chem
         from rdkit.Chem import AllChem
 
-
         mol=super().get_mda_universe()
         universe = mol.select_atoms('index '+str(int(min_1))+':'+str(int(max_1))+' or index '+str(int(min_2))+':'+str(int(max_2)))
         rdkit_mol = universe.convert_to("RDKIT")
-
-
 
         ri = rdkit_mol.GetRingInfo()
         
@@ -122,10 +119,8 @@ class RSA(MDA_input):
             nSystems.append(ringAts)
             systems = nSystems 
 
-
         #getting the atom indices in mdanalysis
-        ring_contact_indices = [universe.atoms[list(item)].indices for item in systems]
-       
+        ring_contact_indices = [universe.atoms[list(item)].indices for item in systems]    
       
         return ring_contact_indices 
 
@@ -134,7 +129,6 @@ class RSA(MDA_input):
         """Function to get the possible ring combinations between two polymers to 
            calculate the distances between them.
  
-
            Parameters
            -----------
 
@@ -157,7 +151,6 @@ class RSA(MDA_input):
         import numpy as np
         import itertools
 
-
         pol1_indices = [item for item in ring_contact_indices if np.all(item < pol2_min)]
         pol2_indices = [item for item in ring_contact_indices if np.any(item >= pol2_min)]
       
@@ -169,7 +162,6 @@ class RSA(MDA_input):
         """Function to get the possible ring combinations between two polymers to 
            calculate the distances between them.
  
-
            Parameters
            -----------
 
@@ -261,30 +253,21 @@ class RSA(MDA_input):
         mol1_pos = polymer_pos_1[ring_comb[0]-pol_indices[0]]
         mol2_pos = polymer_pos_2[ring_comb[1]-pol_indices[1]]
 
-
         tot_dist = mda.lib.distances.distance_array(mol1_pos,
                                                     mol2_pos,
                                                     backend=str(par_scheme),
                                                     box=u.dimensions)
-
-                                       
 
         
         if np.min(tot_dist) < cut_off_stack:      
             u_norm = self.svd(mol1_pos)
             u_norm2 = self.svd(mol2_pos)
 
-          
-
-
             #finding the angle between the two vectors
             vector_angle = abs(np.rad2deg(np.arccos(np.dot(u_norm,u_norm2)/np.linalg.norm(u_norm)/np.linalg.norm(u_norm2))))
 
-            
-
         else:
             vector_angle = None
-
             
         return vector_angle
 
@@ -324,36 +307,21 @@ class RSA(MDA_input):
         import numpy as np
         from MDAnalysis.lib import distances 
         
-        if len(ring_comb) < 1:
-            
+        if len(ring_comb) < 1:            
             pass
 
         else:
-
-           
-
             u=super().get_mda_universe()
-
             u.trajectory[u_frame]
-            
-
-
             resid_1=np.unique(u.atoms[ring_comb[0][0]].resids)
-
-          
-
             resid_2=np.unique(u.atoms[ring_comb[0][1]].resids)
 
-          
-       
             len_mol_1 = len(u.select_atoms('resid '+str(resid_1[0])))
             len_mol_2 = len(u.select_atoms('resid '+str(resid_2[0])))
 
             pol_resids = [list(resid_1), list(resid_2)]
             pol_resids_f = [item for sublist in pol_resids for item in sublist]
-
-          
-
+        
             #number to substract to the atom indices to only do the atom positions once
             pol1_first_index = u.select_atoms('resid '+str(pol_resids_f[0]))[0].index
             pol2_first_index = u.select_atoms('resid '+str(pol_resids_f[1]))[0].index
@@ -364,10 +332,7 @@ class RSA(MDA_input):
 
             polymer_1_pos = atom_positions_tot[:len_mol_1]
             polymer_2_pos = atom_positions_tot[len_mol_1:]
-
-            
-            
-            
+    
             angles_tot_list= list(map(lambda i: self.rings_stacking_dist(u, ring_comb[i], polymer_1_pos,
                                                                 polymer_2_pos, pol_indices_f, cut_off), range(len(ring_comb))))
 
@@ -415,27 +380,18 @@ class RSA(MDA_input):
         connected_components_list=[]
         for i in range(len(rings_df)):
     
-            flat_connection=[]
-   
+            flat_connection=[]   
             connections=rings_df.iloc[i, 1].tolist()
-    
-    
-    
             flat_connection = [inner for outer in connections for inner in outer]
-            
-    
-            
             graph = nx.Graph()
 
             # Add edges to the graph based on the connections
             for connection in flat_connection:
-            
                elem1, elem2 = connection
                graph.add_edge(elem1, elem2)
 
-            #       Find the connected components in the graph
+            #Find the connected components in the graph
             connected_components = list(nx.connected_components(graph))
-    
             connected_components_list.append(connected_components)
 
         return connected_components_list
@@ -501,7 +457,6 @@ class RSA(MDA_input):
 
         import MDAnalysis as mda
 
-    
         return len(u.atoms.residues) 
 
     
@@ -539,22 +494,15 @@ class RSA(MDA_input):
         from itertools import combinations
 
         a=np.unique(u.atoms.resids)
-        
-
         b=list(combinations(a, 2))  
-
 
         all_comb=[['{} {}'.format('resid',values[0]), '{} {}'.format('resid', values[1])]
                   for idx, values in enumerate(b)] 
-
       
         dist_tot=np.array([self.nearest_neighbours(u, str(i), str(j)) for i, j in tqdm(all_comb)])
-
       
         #returns list with the pair indices of the polymers that have at least two atoms that are in contact
         index_cutoff=np.where(dist_tot < float(cutoff))[0] 
-
-        
     
         return index_cutoff,b
     
@@ -600,33 +548,24 @@ class RSA(MDA_input):
         import itertools
         from itertools import combinations
         
-        print('Ring Stacking analysis has started')
-
-
-       
+        print('Ring Stacking analysis has started')       
         u=super().get_mda_universe()
         
         #Get the indices of b of the polymers that are in contact
         #Dimers with smallest distances according to radius cutoff
         index_cutoff,b=self.pol_cutoff(u, float(cut_off)) 
-
-
         dimer_mol=[b[i] for i in index_cutoff] #list of resnum of polymers that are in contact
         
         #Array with atom indices of the polymers that are in contact given in only one array
         dimer_ind=[u.select_atoms('resid {} {}'.format(values[0], values[1])).indices
                    for idx, values in enumerate(dimer_mol)]  
 
-       
-
         dimers_indexes=[(min(u.select_atoms('resid {}'.format(values[0])).indices), 
         max(u.select_atoms('resid {}'.format(values[0])).indices), 
         min(u.select_atoms('resid {}'.format(values[1])).indices), max(u.select_atoms('resid {}'.format(values[1])).indices))
                    for idx, values in enumerate(dimer_mol)] 
-
        
         us = [u]*len(dimers_indexes)  
-
 
         dim2 = list(tqdm(map(self.GetRingSystems, [x[0] for x in dimers_indexes],
                              [x[1] for x in dimers_indexes], [x[2] for x in dimers_indexes],
@@ -635,56 +574,34 @@ class RSA(MDA_input):
     
         u4 = [u]*len(dim2)
 
-
         dim3 = tqdm(map(self.separate_rings, dim2, [x[2] for x in dimers_indexes]),
                     total=len(dim2), desc="Separating Rings")
 
         c = list(dim3)
-        
         u_f=[ts.frame for ts in u.trajectory[int(start):int(stop):int(step)]]
-
 
         print ("\n")
         print ("Preparing DataFrame to store the results")
-   
-        
+          
         data = [[[], []] for _ in range(len(u_f))]
-        
-
-
         timestep_count=0
 
-
-        for u_t in tqdm(u_f):
-
-            
+        for u_t in tqdm(u_f):           
             u4 = [u_t]*len(c)
             cuts = [float(cut_off)]*len(c)
             ang_cuts = [float(ang_cut)]*len(c)
-
-
-
-
-       
 
             dim4 = list(tqdm(map(self.run_rings_stacking_dist, u4, c, cuts, ang_cuts),
                          total=len(dim3), desc="Computing stacking distances"))
     
             results = [result for result in dim4 if result is not None]
 
-
             if len(results)<1:
-
                   print('No ring stacking in this frame')
-
             else:
-
                results1, results2 = zip(*results)
-
-         
-
-
                print(results1)
+                
                flattened_list_1 = []
                for item in results1:
                      for array in item:
@@ -693,19 +610,13 @@ class RSA(MDA_input):
               
                data[timestep_count][0].append(flattened_list_1)
                data[timestep_count][1].append(results2)
-               
-               
-
-
             timestep_count+=1
+            
         df_results = pd.DataFrame(data, columns=['atom_index', 'pol_resid'])
 
         # Save the DataFrame to a file
         df_results.to_parquet(str(output_name), index=False)
     
-
         print ("Information succesfully stored in {}".format(str(output_name)))
         print ("Stacking analysis has succesfully finished!")
     
-
-
