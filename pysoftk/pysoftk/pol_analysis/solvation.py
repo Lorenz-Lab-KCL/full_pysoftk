@@ -20,7 +20,7 @@ def timeit(func):
     return timeit_wrapper
 
 
-class hydration(MDA_input):
+class solvation(MDA_input):
     """A class used to compute the contacts between the polymers of a micelle 
     """
 
@@ -35,7 +35,7 @@ class hydration(MDA_input):
 
     def hydration_calc(self, frame, largest_cluster_resids,
                        micelle_pos, water_name, polymer_oxygen_names, cut_off):
-        """Function to calculate the hydration of selected polymer atoms
+        """Function to calculate the solvation of selected polymer atoms
 
         Parameters
         -----------
@@ -97,9 +97,9 @@ class hydration(MDA_input):
     
         return coord_number
 
-    def hydration_calc_run(self, start_frame, stop_frame, step_frame, largest_cluster_resids, micelle_pos, 
+    def solvation_calc_run(self, start_frame, stop_frame, step_frame, largest_cluster_resids, micelle_pos, 
                            water_name, polymer_oxygen_names, cut_off):
-        """Function to calculate the hydration calculation over the selected frames 
+        """Function to calculate the solvation calculation over the selected frames 
 
         Parameters
         -----------
